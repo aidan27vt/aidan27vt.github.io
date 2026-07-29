@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- EDIT: your name in the title + description -->
+<title>Aidan — Mechanical Engineering Portfolio</title>
+<meta name="description" content="Design and build portfolio: CAD, fabrication, and a subsonic wind tunnel build log." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=Saira+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sheet:#E8EBEE;
+    --panel:#F4F6F7;
+    --panel-2:#DFE4E8;
+    --ink:#161B20;
+    --ink-soft:#5A656E;
+    --rule:#B6C0C7;
+    --rule-soft:#CFD6DB;
+    --blue:#1E4FBF;
+    --amber:#A96E12;
+    --maxw:1120px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--sheet);
+    color:var(--ink);
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    /* faint drafting grid */
+    background-image:
+      linear-gradient(to right, rgba(120,140,155,.10) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(120,140,155,.10) 1px, transparent 1px);
+    background-size:28px 28px;
+  }
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+
+  /* ---------- type ---------- */
+  h1,h2,h3,.display{
+    font-family:"Saira Condensed",Impact,sans-serif;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.02em;
+    line-height:1.02;
+    margin:0;
+  }
+  .mono{font-family:"IBM Plex Mono",ui-monospace,monospace;}
+  .field{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:10px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- top rule bar ---------- */
+  header.bar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(232,235,238,.94);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--ink);
+  }
+  .bar-inner{
+    max-width:var(--maxw);margin:0 auto;padding:10px 28px;
+    display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+  }
+  .bar-name{font-family:"Saira Condensed",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:15px;}
+  .bar-nav{margin-left:auto;display:flex;gap:20px;flex-wrap:wrap;}
+  .bar-nav a{
+    font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--ink-soft);text-decoration:none;
+    padding:2px 0;border-bottom:1px solid transparent;
+  }
+  .bar-nav a:hover,.bar-nav a:focus-visible{color:var(--blue);border-bottom-color:var(--blue);}
+
+  /* ---------- hero ---------- */
+  .hero{padding:64px 0 0;}
+  .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:48px;align-items:center;}
+  .eyebrow{
+    display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:11px;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--blue);
+    border-left:2px solid var(--blue);padding-left:10px;margin-bottom:22px;
+  }
+  h1{font-size:clamp(48px,8vw,92px);}
+  h1 .thin{display:block;font-weight:600;color:var(--ink-soft);font-size:.34em;letter-spacing:.14em;margin-top:14px;}
+  .lede{max-width:44ch;margin:26px 0 0;color:var(--ink-soft);font-size:17px;}
+  .lede strong{color:var(--ink);font-weight:500;}
+
+  /* drawing */
+  .drawing{width:100%;height:auto;display:block;overflow:visible;}
+  .ln{fill:none;stroke:var(--ink);stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;}
+  .ln-thin{fill:none;stroke:var(--ink-soft);stroke-width:.9;}
+  .ln-center{fill:none;stroke:var(--ink-soft);stroke-width:.9;stroke-dasharray:16 4 3 4;opacity:.75;}
+  .ln-dim{fill:none;stroke:var(--amber);stroke-width:.9;}
+  .txt-dim{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.12em;fill:var(--amber);text-transform:uppercase;}
+  .txt-call{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.12em;fill:var(--ink-soft);text-transform:uppercase;}
+  .stream{fill:none;stroke:var(--blue);stroke-width:1.5;stroke-linecap:round;opacity:.85;}
+
+  .draw-in{stroke-dasharray:2400;stroke-dashoffset:2400;animation:draw 1.9s cubic-bezier(.6,.05,.2,1) forwards;}
+  @keyframes draw{to{stroke-dashoffset:0;}}
+  .fade{opacity:0;animation:fade .7s ease forwards;animation-delay:1.5s;}
+  @keyframes fade{to{opacity:1;}}
+  .stream{stroke-dasharray:7 11;animation:flow 1.3s linear infinite;}
+  @keyframes flow{to{stroke-dashoffset:-36;}}
+
+  /* title block */
+  .titleblock{
+    margin:52px 0 0;border:1px solid var(--ink);background:var(--panel);
+    display:grid;grid-template-columns:repeat(5,1fr);
+  }
+  .tb-cell{padding:12px 14px;border-right:1px solid var(--rule);}
+  .tb-cell:last-child{border-right:none;}
+  .tb-cell .val{font-family:"Saira Condensed",sans-serif;font-weight:700;text-transform:uppercase;font-size:16px;letter-spacing:.04em;margin-top:5px;line-height:1.2;}
+  .tb-cell .val.blue{color:var(--blue);}
+
+  /* ---------- sections ---------- */
+  section{padding:88px 0;}
+  .sec-head{display:flex;align-items:baseline;gap:18px;border-bottom:1px solid var(--ink);padding-bottom:12px;margin-bottom:40px;}
+  .sec-head h2{font-size:clamp(26px,3.4vw,38px);}
+  .sec-head .field{margin-left:auto;}
+
+  /* sheet index cards */
+  .sheets{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .sheet{
+    display:flex;flex-direction:column;
+    border:1px solid var(--ink);background:var(--panel);
+    text-decoration:none;color:inherit;
+    transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
+    position:relative;
+  }
+  .sheet:hover,.sheet:focus-visible{
+    transform:translate(-3px,-3px);
+    box-shadow:5px 5px 0 var(--ink);
+    background:#fff;
+    outline:none;
+  }
+  .sheet:focus-visible{outline:2px solid var(--blue);outline-offset:3px;}
+  .sheet-top{display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid var(--rule);}
+  .pill{
+    margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.14em;
+    text-transform:uppercase;padding:3px 7px;border:1px solid currentColor;
+  }
+  .pill.live{color:var(--blue);}
+  .pill.wip{color:var(--amber);}
+  .sheet-body{padding:22px 16px 26px;flex:1;display:flex;flex-direction:column;}
+  .sheet-body h3{font-size:25px;line-height:1.05;}
+  .sheet-body p{color:var(--ink-soft);font-size:14.5px;margin:12px 0 0;}
+  .sheet-cta{
+    margin-top:auto;padding-top:22px;
+    font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:8px;
+  }
+  .sheet-cta .arw{transition:transform .18s ease;}
+  .sheet:hover .arw{transform:translateX(4px);}
+
+  /* mini iso thumbnails inside cards */
+  .thumb{height:96px;border-bottom:1px solid var(--rule-soft);background:var(--panel-2);display:block;}
+
+  /* about */
+  .about-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:56px;}
+  .about-grid p{margin:0 0 18px;}
+  table.bom{width:100%;border-collapse:collapse;font-size:14px;}
+  table.bom th{
+    font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-soft);text-align:left;font-weight:400;padding:0 10px 8px 0;border-bottom:1px solid var(--ink);
+  }
+  table.bom td{padding:11px 10px 11px 0;border-bottom:1px solid var(--rule-soft);vertical-align:top;}
+  table.bom td.num{font-family:"IBM Plex Mono",monospace;color:var(--ink-soft);font-size:12px;width:34px;}
+  table.bom td.tool{font-weight:500;white-space:nowrap;padding-right:22px;}
+  table.bom td.use{color:var(--ink-soft);}
+
+  /* contact */
+  .contact{border:1px solid var(--ink);background:var(--panel);display:grid;grid-template-columns:repeat(4,1fr);}
+  .contact a{color:var(--blue);text-decoration:none;border-bottom:1px solid transparent;}
+  .contact a:hover,.contact a:focus-visible{border-bottom-color:var(--blue);}
+  .contact .tb-cell .val{font-size:14px;font-family:"IBM Plex Mono",monospace;font-weight:400;text-transform:none;letter-spacing:0;}
+
+  footer{border-top:1px solid var(--ink);padding:22px 0 48px;}
+  .foot-inner{display:flex;gap:18px;flex-wrap:wrap;}
+  .foot-inner .field:last-child{margin-left:auto;}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr;gap:34px;}
+    .sheets{grid-template-columns:1fr;}
+    .about-grid{grid-template-columns:1fr;gap:40px;}
+    .titleblock{grid-template-columns:repeat(2,1fr);}
+    .tb-cell{border-bottom:1px solid var(--rule);}
+    .contact{grid-template-columns:repeat(2,1fr);}
+    section{padding:62px 0;}
+  }
+  @media (max-width:560px){
+    .wrap,.bar-inner{padding-left:18px;padding-right:18px;}
+    .titleblock,.contact{grid-template-columns:1fr;}
+    .bar-nav{gap:14px;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none !important;transition:none !important;}
+    .draw-in{stroke-dashoffset:0;}
+    .fade{opacity:1;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= TOP RULE BAR ================= -->
+<header class="bar">
+  <div class="bar-inner">
+    <!-- EDIT: your full name -->
+    <span class="bar-name">Aidan [Last Name]</span>
+    <nav class="bar-nav">
+      <a href="#index">Index</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<div class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">Design &amp; Build Portfolio</span>
+        <!-- EDIT: name + discipline line -->
+        <h1>Aidan<br>[Last Name]
+          <span class="thin">Mechanical Engineering Student</span>
+        </h1>
+        <!-- EDIT: rewrite this in your own voice -->
+        <p class="lede">I design parts in <strong>SOLIDWORKS</strong> and then actually build them. Right now that means a
+          <strong>subsonic wind tunnel</strong> — modeled section by section, printed, and documented as it goes.</p>
+      </div>
+
+      <div>
+        <svg class="drawing" viewBox="0 0 880 320" role="img" aria-label="Side-view engineering drawing of an open-circuit wind tunnel: inlet, settling chamber, contraction, test section, diffuser, and fan.">
+          <!-- centerline -->
+          <line class="ln-center fade" x1="30" y1="185" x2="850" y2="185" />
+
+          <!-- upper profile -->
+          <path class="ln draw-in" d="M60,110 L60,120 M60,115 L235,115 C305,115 335,160 405,160 L560,160 L760,132 L820,132" style="animation-delay:.1s"/>
+          <!-- lower profile (mirror about y=185) -->
+          <path class="ln draw-in" d="M60,260 L60,250 M60,255 L235,255 C305,255 335,210 405,210 L560,210 L760,238 L820,238" style="animation-delay:.1s"/>
+
+          <!-- inlet bell -->
+          <path class="ln draw-in" d="M60,115 C40,115 34,100 34,92 M60,255 C40,255 34,270 34,278" style="animation-delay:.05s"/>
+
+          <!-- station dividers -->
+          <g class="ln-thin fade" style="animation-delay:1.6s">
+            <line x1="235" y1="115" x2="235" y2="255" />
+            <line x1="405" y1="160" x2="405" y2="210" />
+            <line x1="560" y1="160" x2="560" y2="210" />
+            <line x1="760" y1="132" x2="760" y2="238" />
+          </g>
+
+          <!-- honeycomb hatch in settling chamber -->
+          <g class="ln-thin fade" style="animation-delay:1.7s">
+            <line x1="120" y1="118" x2="120" y2="252"/><line x1="130" y1="118" x2="130" y2="252"/>
+            <line x1="140" y1="118" x2="140" y2="252"/><line x1="150" y1="118" x2="150" y2="252"/>
+            <line x1="160" y1="118" x2="160" y2="252"/><line x1="170" y1="118" x2="170" y2="252"/>
+          </g>
+
+          <!-- smoke streamlines converging through the contraction -->
+          <g class="fade" style="animation-delay:1.9s">
+            <path class="stream" d="M78,145 L235,145 C305,145 335,171 405,171 L555,171"/>
+            <path class="stream" d="M78,185 L555,185" style="animation-delay:-.4s"/>
+            <path class="stream" d="M78,225 L235,225 C305,225 335,199 405,199 L555,199" style="animation-delay:-.8s"/>
+          </g>
+
+          <!-- test-section model -->
+          <path class="ln fade" d="M455,190 C470,178 500,176 512,185 C500,190 470,193 455,190 Z" style="animation-delay:2s"/>
+
+          <!-- dimension line over test section -->
+          <g class="fade" style="animation-delay:2.1s">
+            <line class="ln-dim" x1="405" y1="150" x2="405" y2="84"/>
+            <line class="ln-dim" x1="560" y1="150" x2="560" y2="84"/>
+            <line class="ln-dim" x1="405" y1="92" x2="560" y2="92"/>
+            <path class="ln-dim" d="M405,92 L413,88.5 L413,95.5 Z" fill="var(--amber)"/>
+            <path class="ln-dim" d="M560,92 L552,88.5 L552,95.5 Z" fill="var(--amber)"/>
+            <!-- EDIT: real test-section length -->
+            <text class="txt-dim" x="482" y="80" text-anchor="middle">Test section</text>
+          </g>
+
+          <!-- callouts -->
+          <g class="fade" style="animation-delay:2.25s">
+            <line class="ln-thin" x1="150" y1="255" x2="150" y2="292"/>
+            <line class="ln-thin" x1="150" y1="292" x2="196" y2="292"/>
+            <text class="txt-call" x="152" y="305">Honeycomb — printed</text>
+
+            <line class="ln-thin" x1="320" y1="228" x2="320" y2="292"/>
+            <text class="txt-call" x="322" y="305">Contraction</text>
+
+            <line class="ln-thin" x1="790" y1="132" x2="790" y2="98"/>
+            <text class="txt-call" x="790" y="88" text-anchor="middle">Fan</text>
+          </g>
+
+          <!-- fan -->
+          <g class="ln fade" style="animation-delay:1.8s">
+            <circle cx="790" cy="185" r="34" fill="none"/>
+            <line x1="790" y1="151" x2="790" y2="219"/>
+            <line x1="766" y1="161" x2="814" y2="209"/>
+            <line x1="766" y1="209" x2="814" y2="161"/>
+          </g>
+          <path class="ln draw-in" d="M820,132 L840,132 M820,238 L840,238" style="animation-delay:.6s"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- ===== TITLE BLOCK ===== -->
+    <div class="titleblock">
+      <div class="tb-cell">
+        <div class="field">Drawn by</div>
+        <!-- EDIT -->
+        <div class="val">A. [Last Name]</div>
+      </div>
+      <div class="tb-cell">
+        <div class="field">School</div>
+        <!-- EDIT -->
+        <div class="val">[University]</div>
+      </div>
+      <div class="tb-cell">
+        <div class="field">Class of</div>
+        <!-- EDIT -->
+        <div class="val">[20XX]</div>
+      </div>
+      <div class="tb-cell">
+        <div class="field">Seeking</div>
+        <!-- EDIT -->
+        <div class="val blue">Summer 2027 Internship</div>
+      </div>
+      <div class="tb-cell">
+        <div class="field">Rev</div>
+        <!-- EDIT: bump this when you update the site -->
+        <div class="val">A — Jul 2026</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= SHEET INDEX ================= -->
+<section id="index">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Sheet Index</h2>
+      <span class="field">03 sheets</span>
+    </div>
+
+    <div class="sheets">
+
+      <!-- ---- 01 RESUME ---- -->
+      <!-- EDIT: put resume.pdf in the repo root, or change this href -->
+      <a class="sheet" href="resume.pdf" target="_blank" rel="noopener">
+        <svg class="thumb" viewBox="0 0 200 96" aria-hidden="true">
+          <rect x="72" y="14" width="56" height="72" fill="none" stroke="var(--ink)" stroke-width="1.4"/>
+          <g stroke="var(--rule)" stroke-width="1.2">
+            <line x1="82" y1="30" x2="118" y2="30"/><line x1="82" y1="40" x2="112" y2="40"/>
+            <line x1="82" y1="50" x2="118" y2="50"/><line x1="82" y1="60" x2="104" y2="60"/>
+            <line x1="82" y1="70" x2="114" y2="70"/>
+          </g>
+          <line x1="82" y1="22" x2="100" y2="22" stroke="var(--blue)" stroke-width="2.2"/>
+        </svg>
+        <div class="sheet-top">
+          <span class="field">Sheet 01</span>
+          <span class="pill live">PDF</span>
+        </div>
+        <div class="sheet-body">
+          <h3>Résumé</h3>
+          <p>One page — coursework, projects, and work history. Opens in a new tab.</p>
+          <span class="sheet-cta">Open <span class="arw">→</span></span>
+        </div>
+      </a>
+
+      <!-- ---- 02 CAD ---- -->
+      <!-- EDIT: link to your CAD repo or Drive folder -->
+      <a class="sheet" href="https://github.com/aidan27vt/CAD" target="_blank" rel="noopener">
+        <svg class="thumb" viewBox="0 0 200 96" aria-hidden="true">
+          <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+            <path d="M100,20 L128,36 L128,66 L100,82 L72,66 L72,36 Z"/>
+            <path d="M100,20 L100,50 L72,66 M100,50 L128,36"/>
+          </g>
+          <path d="M100,50 L128,36 L128,66 L100,82 Z" fill="var(--blue)" opacity=".13"/>
+        </svg>
+        <div class="sheet-top">
+          <span class="field">Sheet 02</span>
+          <span class="pill live">Files</span>
+        </div>
+        <div class="sheet-body">
+          <h3>CAD Library</h3>
+          <p>SOLIDWORKS parts and assemblies, with STEP exports so they open in anything.</p>
+          <span class="sheet-cta">Browse <span class="arw">→</span></span>
+        </div>
+      </a>
+
+      <!-- ---- 03 WIND TUNNEL ---- -->
+      <a class="sheet" href="https://aidan27vt.github.io/Wind_Tunnel/" target="_blank" rel="noopener">
+        <svg class="thumb" viewBox="0 0 200 96" aria-hidden="true">
+          <g fill="none" stroke="var(--ink)" stroke-width="1.4">
+            <path d="M46,26 L86,26 C102,26 110,44 126,44 L160,44"/>
+            <path d="M46,70 L86,70 C102,70 110,52 126,52 L160,52"/>
+          </g>
+          <g fill="none" stroke="var(--blue)" stroke-width="1.3" opacity=".8">
+            <path d="M54,38 L86,38 C102,38 110,45 126,45 L152,45"/>
+            <path d="M54,58 L86,58 C102,58 110,51 126,51 L152,51"/>
+          </g>
+        </svg>
+        <div class="sheet-top">
+          <span class="field">Sheet 03</span>
+          <span class="pill wip">In progress</span>
+        </div>
+        <div class="sheet-body">
+          <h3>Subsonic Wind&nbsp;Tunnel</h3>
+          <p>Open-circuit tunnel with a smoke rake. Design notes, live build log, and results.</p>
+          <span class="sheet-cta">View project <span class="arw">→</span></span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>About</h2>
+      <span class="field">Notes</span>
+    </div>
+
+    <div class="about-grid">
+      <div>
+        <!-- EDIT: this whole block. Two or three short paragraphs, your voice. -->
+        <p>I'm a mechanical engineering student at [University], graduating in [20XX]. Most of what I know I learned by
+          modeling something, printing it, finding out where it was wrong, and fixing it.</p>
+        <p>The wind tunnel is the clearest example. It started as a way to see flow instead of just solving for it —
+          an open-circuit design with a honeycomb and screens ahead of the contraction, and a smoke rake so the
+          streamlines are actually legible through the test section. Every section is modeled in SOLIDWORKS and printed
+          in-house, and I've been writing down the reasoning as I go rather than after the fact.</p>
+        <p>I'm looking for a [summer 20XX] internship in [design / manufacturing / aero]. The fastest way to get a feel
+          for how I work is the build log on Sheet 03.</p>
+      </div>
+
+      <div>
+        <table class="bom">
+          <caption class="field" style="text-align:left;padding-bottom:12px;">Tools</caption>
+          <thead>
+            <tr><th>No.</th><th>Item</th><th>Applied on</th></tr>
+          </thead>
+          <tbody>
+            <!-- EDIT: swap in your real tools and where you've used them -->
+            <tr><td class="num">01</td><td class="tool">SOLIDWORKS</td><td class="use">Parts, assemblies, drawings</td></tr>
+            <tr><td class="num">02</td><td class="tool">FDM printing</td><td class="use">Honeycomb, tunnel sections</td></tr>
+            <tr><td class="num">03</td><td class="tool">MATLAB</td><td class="use">[Coursework / analysis]</td></tr>
+            <tr><td class="num">04</td><td class="tool">[Ansys / Fusion]</td><td class="use">[EDIT]</td></tr>
+            <tr><td class="num">05</td><td class="tool">Shop work</td><td class="use">[Mill, lathe, welding — EDIT]</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" style="padding-bottom:56px;">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Contact</h2>
+      <span class="field">Open to internships</span>
+    </div>
+
+    <div class="contact">
+      <div class="tb-cell">
+        <div class="field">Email</div>
+        <!-- EDIT -->
+        <div class="val"><a href="mailto:you@example.com">you@example.com</a></div>
+      </div>
+      <div class="tb-cell">
+        <div class="field">LinkedIn</div>
+        <!-- EDIT -->
+        <div class="val"><a href="https://linkedin.com/in/[handle]" target="_blank" rel="noopener">/in/[handle]</a></div>
+      </div>
+      <div class="tb-cell">
+        <div class="field">GitHub</div>
+        <div class="val"><a href="https://github.com/aidan27vt" target="_blank" rel="noopener">@aidan27vt</a></div>
+      </div>
+      <div class="tb-cell">
+        <div class="field">Location</div>
+        <!-- EDIT -->
+        <div class="val">[City, ST]</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <span class="field">Aidan [Last Name] — Portfolio</span>
+    <span class="field">Rev A</span>
+    <span class="field">Built and hosted on GitHub Pages</span>
+  </div>
+</footer>
+
+</body>
+</html>
